@@ -1,0 +1,21 @@
+{
+  "name": "@dentalos/providers",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'no lint configured'"
+  },
+  "dependencies": {
+    "@dentalos/core": "*"
+  },
+  "devDependencies": {
+    "@dentalos/config": "*",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}

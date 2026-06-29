@@ -1,0 +1,53 @@
+{
+  "common": {
+    "appName": "DentalOS",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "loading": "Chargement…",
+    "book": "Réserver",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "signOut": "Déconnexion"
+  },
+  "portal": {
+    "welcome": "Bienvenue",
+    "bookNow": "Réserver",
+    "nextVisit": "Prochain rendez-vous",
+    "myAppointments": "Mes rendez-vous",
+    "balance": "Solde",
+    "messages": "Messages",
+    "forms": "Formulaires",
+    "enterPhone": "Entrez votre numéro de mobile",
+    "sendCode": "Envoyer le code",
+    "enterCode": "Entrez le code à 6 chiffres reçu",
+    "verify": "Vérifier",
+    "chooseService": "Choisissez un service",
+    "chooseProvider": "Choisissez un dentiste",
+    "anyProvider": "N'importe quel dentiste disponible",
+    "chooseTime": "Choisissez un horaire",
+    "yourDetails": "Vos coordonnées",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "E-mail (facultatif)",
+    "upcoming": "À venir",
+    "past": "Visites passées",
+    "noUpcoming": "Aucun rendez-vous à venir",
+    "bookingConfirmed": "Votre rendez-vous est confirmé !"
+  },
+  "practice": {
+    "dashboard": "Tableau de bord",
+    "schedule": "Agenda",
+    "patients": "Patients",
+    "nextPatient": "Prochain patient",
+    "confirmationsDue": "Confirmations en attente",
+    "arrived": "Arrivé",
+    "waitlist": "Liste d'attente",
+    "today": "Aujourd'hui",
+    "newAppointment": "Nouveau rendez-vous",
+    "newPatient": "Nouveau patient",
+    "noConfirmations": "Tout est confirmé",
+    "production": "Production",
+    "remaining": "Restant aujourd'hui"
+  }
+}

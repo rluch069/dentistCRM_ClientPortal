@@ -1,0 +1,32 @@
+{
+  "name": "dentalos",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DentalOS — multi-tenant dental practice management platform + patient portal for Mauritius",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:generate": "npm run db:generate -w @dentalos/db",
+    "db:provision-control": "tsx packages/tenancy/src/scripts/provision-control.ts",
+    "db:provision-demo": "tsx scripts/provision-demo.ts",
+    "db:migrate:fleet": "tsx packages/tenancy/src/scripts/migrate-fleet.ts",
+    "db:reset": "tsx packages/tenancy/src/scripts/reset-dev.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "turbo": "^2.3.4",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@11.6.2"
+}

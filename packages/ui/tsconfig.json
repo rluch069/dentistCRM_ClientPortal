@@ -1,0 +1,10 @@
+{
+  "extends": "@dentalos/config/tsconfig/library.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["react", "react-dom", "node"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

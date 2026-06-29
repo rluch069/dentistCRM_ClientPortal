@@ -1,0 +1,53 @@
+{
+  "common": {
+    "appName": "DentalOS",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading…",
+    "book": "Book",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "signOut": "Sign out"
+  },
+  "portal": {
+    "welcome": "Welcome",
+    "bookNow": "Book Now",
+    "nextVisit": "Next Visit",
+    "myAppointments": "My Appointments",
+    "balance": "Balance",
+    "messages": "Messages",
+    "forms": "Forms",
+    "enterPhone": "Enter your mobile number",
+    "sendCode": "Send code",
+    "enterCode": "Enter the 6-digit code we sent you",
+    "verify": "Verify",
+    "chooseService": "Choose a service",
+    "chooseProvider": "Choose a dentist",
+    "anyProvider": "Any available dentist",
+    "chooseTime": "Choose a time",
+    "yourDetails": "Your details",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email (optional)",
+    "upcoming": "Upcoming",
+    "past": "Past visits",
+    "noUpcoming": "No upcoming appointments",
+    "bookingConfirmed": "Your appointment is confirmed!"
+  },
+  "practice": {
+    "dashboard": "Dashboard",
+    "schedule": "Schedule",
+    "patients": "Patients",
+    "nextPatient": "Next patient",
+    "confirmationsDue": "Confirmations due",
+    "arrived": "Arrived",
+    "waitlist": "ASAP / Waitlist",
+    "today": "Today",
+    "newAppointment": "New appointment",
+    "newPatient": "New patient",
+    "noConfirmations": "All confirmed",
+    "production": "Production",
+    "remaining": "Remaining today"
+  }
+}

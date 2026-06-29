@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Refined medical blue — light */
+    --background: 214 42% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 222 84% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 32% 95%;
+    --secondary-foreground: 222 40% 20%;
+    --muted: 214 32% 95%;
+    --muted-foreground: 215 18% 46%;
+    --accent: 199 92% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 58% 40%;
+    --success-foreground: 0 0% 100%;
+    --warning: 35 92% 52%;
+    --warning-foreground: 28 80% 14%;
+    --border: 214 30% 90%;
+    --input: 214 30% 90%;
+    --ring: 222 84% 52%;
+    --radius: 0.75rem;
+
+    /* Soft-depth elevation — nested var() resolves at use site, so .dark only flips --shadow-color */
+    --shadow-color: 220 45% 24%;
+    --shadow-sm: 0 1px 2px 0 hsl(var(--shadow-color) / 0.06);
+    --shadow: 0 1px 3px 0 hsl(var(--shadow-color) / 0.09), 0 1px 2px -1px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 4px 14px -3px hsl(var(--shadow-color) / 0.1), 0 2px 6px -2px hsl(var(--shadow-color) / 0.06);
+    --shadow-lg: 0 12px 30px -8px hsl(var(--shadow-color) / 0.14), 0 4px 10px -4px hsl(var(--shadow-color) / 0.08);
+    --shadow-xl: 0 24px 50px -12px hsl(var(--shadow-color) / 0.2);
+
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Refined medical blue — dark */
+    --background: 222 47% 7%;
+    --foreground: 210 40% 96%;
+    --card: 222 44% 11%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 44% 12%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 217 91% 62%;
+    --primary-foreground: 222 47% 9%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 217 33% 16%;
+    --muted-foreground: 215 20% 68%;
+    --accent: 199 89% 52%;
+    --accent-foreground: 222 47% 9%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 152 55% 48%;
+    --success-foreground: 222 47% 9%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 28 80% 10%;
+    --border: 217 30% 20%;
+    --input: 217 30% 22%;
+    --ring: 217 91% 62%;
+
+    /* Deeper, blacker shadows for dark surfaces */
+    --shadow-color: 222 70% 2%;
+    --shadow-sm: 0 1px 2px 0 hsl(var(--shadow-color) / 0.4);
+    --shadow: 0 1px 3px 0 hsl(var(--shadow-color) / 0.5), 0 1px 2px -1px hsl(var(--shadow-color) / 0.4);
+    --shadow-md: 0 4px 14px -3px hsl(var(--shadow-color) / 0.5), 0 2px 6px -2px hsl(var(--shadow-color) / 0.4);
+    --shadow-lg: 0 12px 30px -8px hsl(var(--shadow-color) / 0.55), 0 4px 10px -4px hsl(var(--shadow-color) / 0.45);
+    --shadow-xl: 0 24px 50px -12px hsl(var(--shadow-color) / 0.65);
+
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "cv11", "ss01", "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
