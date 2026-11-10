@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@dentalos/ui";
-import { LayoutDashboard, Users, Stethoscope, Receipt, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Users, Stethoscope, Receipt, BarChart3, Settings } from "lucide-react";
 
 const NAV = [
   { href: "/dashboard", label: "Schedule", icon: LayoutDashboard },
   { href: "/patients", label: "Patients", icon: Users },
   { href: "/billing/reconciliation", label: "Billing", icon: Receipt },
   { href: "/reports", label: "Reports", icon: BarChart3 },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function Sidebar({ clinicName }: { clinicName: string }) {

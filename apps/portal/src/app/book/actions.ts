@@ -43,7 +43,7 @@ export async function confirmBookingAction(input: ConfirmBookingActionInput): Pr
     const result = await confirmBooking(
       { db: ctx.db, tenant: ctx.tenant, providers: ctx.providers },
       identity,
-      { ...input, portalLink: `http://${ctx.slug}.localhost:3100` },
+      { ...input, portalLink: process.env.PORTAL_URL ?? `http://${ctx.slug}.localhost:3100` },
     );
     if (token.kind !== "patient") {
       const newToken = await signSession({ kind: "patient", sub: result.patientId, tenantId: ctx.tenant.id, slug: ctx.slug, phone: token.phone });

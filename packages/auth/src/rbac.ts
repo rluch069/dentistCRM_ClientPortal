@@ -28,6 +28,7 @@ export const ROLE_PERMISSIONS: Record<StaffRole, Permission[]> = {
     "clinical:write",
     "billing:read",
     "reports:read",
+    "settings:write",
   ],
   hygienist: [
     "appointments:read",
@@ -52,6 +53,7 @@ export const ROLE_PERMISSIONS: Record<StaffRole, Permission[]> = {
     "patients:write",
     "billing:read",
     "billing:write",
+    "settings:write",
   ],
 };
 

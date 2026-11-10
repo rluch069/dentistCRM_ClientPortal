@@ -11,6 +11,7 @@ export interface OnboardState {
 }
 
 export async function createClinicAction(_prev: OnboardState, formData: FormData): Promise<OnboardState> {
+  if (process.env.TENANT_SLUG) return { error: "Onboarding is disabled on this single-clinic deployment." };
   const phoneRaw = (formData.get("phone") as string | null)?.trim();
   const parsed = schemas.clinicOnboardingSchema.safeParse({
     clinicName: formData.get("clinicName"),

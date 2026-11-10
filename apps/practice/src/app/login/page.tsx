@@ -1,9 +1,12 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@dentalos/ui";
+import { Card, CardContent, CardHeader, CardTitle, DemoPanel, demoButtonClass } from "@dentalos/ui";
 import { Stethoscope } from "lucide-react";
 import { getTenantContext } from "@/lib/tenant";
 import { getStaffSession } from "@/lib/session";
 import { LoginForm } from "@/components/login-form";
+import { DEMO_PASSWORD, DEMO_STAFF, PORTAL_PORT } from "@/lib/demo-accounts";
+import { demoLoginAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
@@ -13,6 +16,8 @@ export default async function LoginPage() {
     const session = await getStaffSession();
     if (session) redirect("/dashboard");
   }
+  const demoStaff = ctx ? DEMO_STAFF[ctx.slug] : undefined;
+  const hostname = ((await headers()).get("host") ?? "").split(":")[0];
 
   return (
     <main className="relative flex min-h-screen flex-col justify-center bg-gradient-to-b from-primary/5 via-background to-background px-6">
@@ -40,6 +45,29 @@ export default async function LoginPage() {
             )}
           </CardContent>
         </Card>
+
+        {demoStaff && (
+          <DemoPanel
+            className="mt-6"
+            footnote={
+              <>
+                Password for every demo account: <span className="font-mono text-foreground/80">{DEMO_PASSWORD}</span>. All data is fictional.
+              </>
+            }
+          >
+            {demoStaff.map((a) => (
+              <form key={a.email} action={demoLoginAction}>
+                <input type="hidden" name="email" value={a.email} />
+                <button type="submit" className={demoButtonClass}>
+                  {a.label}
+                </button>
+              </form>
+            ))}
+            <a href={`${process.env.PORTAL_URL ?? `http://${hostname}:${PORTAL_PORT}`}/login`} className={demoButtonClass}>
+              Patient Portal
+            </a>
+          </DemoPanel>
+        )}
       </div>
     </main>
   );

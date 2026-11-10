@@ -227,11 +227,22 @@ function Drawer({ title, children, onClose }: { title: string; children: React.R
   );
 }
 
+const OTHER_TYPE = "__other__";
+
 export function NewAppointmentDialog(
   props: ScheduleBoardProps & { prefill: { operatoryId: string; startMinute: number }; onClose: () => void; onCreated: () => void },
 ) {
+  const [patientMode, setPatientMode] = React.useState<"existing" | "new">("existing");
   const [patientId, setPatientId] = React.useState(props.patients[0]?.id ?? "");
+  const [newFirst, setNewFirst] = React.useState("");
+  const [newLast, setNewLast] = React.useState("");
+  const [newPhone, setNewPhone] = React.useState("");
+  const [newEmail, setNewEmail] = React.useState("");
+
   const [typeId, setTypeId] = React.useState(props.appointmentTypes[0]?.id ?? "");
+  const [customTypeName, setCustomTypeName] = React.useState("");
+  const [customDuration, setCustomDuration] = React.useState("30");
+
   const [providerId, setProviderId] = React.useState(props.providers[0]?.id ?? "");
   const [operatoryId, setOperatoryId] = React.useState(props.prefill.operatoryId || props.operatories[0]?.id || "");
   const [time, setTime] = React.useState(
@@ -240,19 +251,27 @@ export function NewAppointmentDialog(
   const [error, setError] = React.useState<string | null>(null);
   const [pending, startTransition] = React.useTransition();
   const type = props.appointmentTypes.find((t) => t.id === typeId);
+  const isOtherType = typeId === OTHER_TYPE;
+
+  const patientValid = patientMode === "existing" ? Boolean(patientId) : Boolean(newFirst.trim() && newLast.trim());
+  const typeValid = isOtherType ? Boolean(customTypeName.trim() && Number(customDuration) > 0) : Boolean(typeId);
 
   function submit() {
     setError(null);
     const [h, m] = time.split(":").map(Number);
     startTransition(async () => {
       const res = await createAppointmentAction({
-        patientId,
         providerId,
         operatoryId,
-        appointmentTypeId: typeId,
         date: props.date,
         startMinute: (h ?? 0) * 60 + (m ?? 0),
-        durationMinutes: type?.durationMinutes ?? 30,
+        durationMinutes: isOtherType ? Number(customDuration) || 30 : (type?.durationMinutes ?? 30),
+        ...(patientMode === "new"
+          ? { newPatient: { firstName: newFirst.trim(), lastName: newLast.trim(), phone: newPhone.trim() || undefined, email: newEmail.trim() || undefined } }
+          : { patientId }),
+        ...(isOtherType
+          ? { customType: { name: customTypeName.trim(), durationMinutes: Number(customDuration) || 30 } }
+          : { appointmentTypeId: typeId }),
       });
       if (res.error) setError(res.error);
       else props.onCreated();
@@ -263,19 +282,47 @@ export function NewAppointmentDialog(
     <Drawer title="New appointment" onClose={props.onClose}>
       <div className="space-y-3">
         <Field label="Patient">
-          <Select value={patientId} onChange={(e) => setPatientId(e.target.value)}>
-            {props.patients.length === 0 && <option value="">No patients yet</option>}
-            {props.patients.map((p) => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </Select>
+          {patientMode === "existing" ? (
+            <div className="space-y-1.5">
+              <Select value={patientId} onChange={(e) => setPatientId(e.target.value)}>
+                {props.patients.length === 0 && <option value="">No patients yet</option>}
+                {props.patients.map((p) => (
+                  <option key={p.id} value={p.id}>{p.name}</option>
+                ))}
+              </Select>
+              <button type="button" onClick={() => setPatientMode("new")} className="text-xs font-medium text-primary hover:underline">
+                + New patient
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-2 rounded-lg border border-dashed border-border/70 p-3">
+              <div className="grid grid-cols-2 gap-2">
+                <Input placeholder="First name" value={newFirst} onChange={(e) => setNewFirst(e.target.value)} />
+                <Input placeholder="Last name" value={newLast} onChange={(e) => setNewLast(e.target.value)} />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Input placeholder="Phone (optional)" value={newPhone} onChange={(e) => setNewPhone(e.target.value)} />
+                <Input placeholder="Email (optional)" type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+              </div>
+              <button type="button" onClick={() => setPatientMode("existing")} className="text-xs font-medium text-muted-foreground hover:text-foreground">
+                ← Use existing patient
+              </button>
+            </div>
+          )}
         </Field>
         <Field label="Type">
           <Select value={typeId} onChange={(e) => setTypeId(e.target.value)}>
             {props.appointmentTypes.map((t) => (
               <option key={t.id} value={t.id}>{t.name} ({t.durationMinutes}m)</option>
             ))}
+            <option value={OTHER_TYPE}>Other…</option>
           </Select>
+          {isOtherType && (
+            <div className="mt-2 grid grid-cols-[1fr_auto] gap-2">
+              <Input placeholder="Custom type name" value={customTypeName} onChange={(e) => setCustomTypeName(e.target.value)} />
+              <Input type="number" min={5} max={480} value={customDuration} onChange={(e) => setCustomDuration(e.target.value)} className="w-20" />
+            </div>
+          )}
         </Field>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Provider">
@@ -297,7 +344,7 @@ export function NewAppointmentDialog(
           <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
         </Field>
         {error && <p className="text-sm text-destructive">{error}</p>}
-        <Button className="w-full" disabled={pending || !patientId} onClick={submit}>
+        <Button className="w-full" disabled={pending || !patientValid || !typeValid} onClick={submit}>
           {pending ? (
             <>
               <Spinner /> Booking…

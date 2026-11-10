@@ -28,7 +28,8 @@ export interface PortalTenantContext {
 
 export async function getTenantContext(): Promise<PortalTenantContext | null> {
   const h = await headers();
-  const slug = h.get("x-tenant-slug") || slugFromHost(h.get("host"));
+  // TENANT_SLUG pins one clinic (single-clinic deployments, e.g. *.vercel.app); otherwise the host decides.
+  const slug = process.env.TENANT_SLUG || slugFromHost(h.get("host"));
   if (!slug) return null;
   const resolved = await getTenantResolver().resolveBySlug(slug);
   if (!resolved) return null;

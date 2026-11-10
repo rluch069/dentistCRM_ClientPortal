@@ -22,3 +22,4 @@ export {
 } from "./components/primitives";
 export { ThemeProvider, ThemeToggle } from "./components/theme";
 export { DevModeProvider, useVariant } from "./components/dev-mode";
+export { DemoPanel, demoButtonClass } from "./components/demo-panel";

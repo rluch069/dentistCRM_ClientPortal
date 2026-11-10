@@ -21,7 +21,8 @@ export function slugFromHost(host: string | null): string | null {
 
 export async function getCurrentSlug(): Promise<string | null> {
   const h = await headers();
-  return h.get("x-tenant-slug") || slugFromHost(h.get("host"));
+  // TENANT_SLUG pins one clinic (single-clinic deployments, e.g. *.vercel.app); otherwise the host decides.
+  return process.env.TENANT_SLUG || slugFromHost(h.get("host"));
 }
 
 export interface ResolvedTenantContext {

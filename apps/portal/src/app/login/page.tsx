@@ -1,15 +1,20 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@dentalos/ui";
+import { Card, CardContent, CardHeader, CardTitle, DemoPanel, demoButtonClass } from "@dentalos/ui";
 import { CalendarHeart } from "lucide-react";
 import { getTenantContext } from "@/lib/tenant";
 import { getPatientSession } from "@/lib/session";
 import { PhoneLogin } from "@/components/phone-login";
+import { DEMO_PATIENTS } from "@/lib/demo-accounts";
+import { demoLoginAction } from "./actions";
 
 export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
   const ctx = await getTenantContext();
   if (ctx && (await getPatientSession())) redirect("/");
+  const demoPatients = ctx ? DEMO_PATIENTS[ctx.slug] : undefined;
+  const hostname = ((await headers()).get("host") ?? "").split(":")[0];
 
   return (
     <main className="flex min-h-screen flex-col justify-center bg-gradient-to-b from-primary/5 via-background to-background px-6">
@@ -36,6 +41,22 @@ export default async function LoginPage() {
           )}
         </CardContent>
       </Card>
+
+      {demoPatients && (
+        <DemoPanel className="mt-6" footnote="Signs in as a seeded demo patient — skips the SMS code. All data is fictional.">
+          {demoPatients.map((p) => (
+            <form key={p.phone} action={demoLoginAction}>
+              <input type="hidden" name="phone" value={p.phone} />
+              <button type="submit" className={demoButtonClass}>
+                {p.name}
+              </button>
+            </form>
+          ))}
+          <a href={`${process.env.STAFF_URL ?? `http://${hostname}:3200`}/login`} className={demoButtonClass}>
+            Staff app
+          </a>
+        </DemoPanel>
+      )}
     </main>
   );
 }

@@ -71,7 +71,7 @@ export async function acceptPlanAction(planId: string, signatureName: string) {
 }
 
 export async function sharePlanAction(planId: string) {
-  return run((ctx) => shareTreatmentPlan(ctx, planId, `http://${ctx.tenant.slug}.localhost:3100/records`));
+  return run((ctx) => shareTreatmentPlan(ctx, planId, `${process.env.PORTAL_URL ?? `http://${ctx.tenant.slug}.localhost:3100`}/records`));
 }
 
 export async function createNoteAction(input: CreateNoteInput) {

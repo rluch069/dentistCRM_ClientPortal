@@ -12,9 +12,9 @@ export class LocalPostgresDriver implements ProvisioningDriver {
   }
 
   private connStringFor(dbName: string): string {
-    const { host, port, user, password } = this.env.tenant;
+    const { host, port, user, password, sslmode } = this.env.tenant;
     const auth = password ? `${encodeURIComponent(user)}:${encodeURIComponent(password)}` : encodeURIComponent(user);
-    return `postgresql://${auth}@${host}:${port}/${dbName}`;
+    return `postgresql://${auth}@${host}:${port}/${dbName}${sslmode ? `?sslmode=${sslmode}` : ""}`;
   }
 
   async createDatabase(slug: string): Promise<ProvisionedDatabase> {

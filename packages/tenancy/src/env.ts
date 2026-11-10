@@ -46,6 +46,8 @@ export interface TenancyEnv {
     user: string;
     password: string;
     prefix: string;
+    /** e.g. "require" for hosted Postgres (Neon); appended to tenant connection strings. */
+    sslmode: string | undefined;
   };
   provisioningDriver: "local" | "neon";
   neonApiKey: string | undefined;
@@ -64,6 +66,7 @@ export function getTenancyEnv(): TenancyEnv {
       user: process.env.TENANT_DB_USER ?? "postgres",
       password: process.env.TENANT_DB_PASSWORD ?? "",
       prefix: process.env.TENANT_DB_PREFIX ?? "dentalos_tenant_",
+      sslmode: process.env.TENANT_DB_SSLMODE || undefined,
     },
     provisioningDriver: (process.env.PROVISIONING_DRIVER as "local" | "neon") ?? "local",
     neonApiKey: process.env.NEON_API_KEY || undefined,
